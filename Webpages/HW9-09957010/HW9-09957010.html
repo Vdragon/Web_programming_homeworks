@@ -60,6 +60,13 @@ HW9-09957010
 
         /*建立4*4表格，由(1,1)到(4,4)*/
         var tr_count, td_count;
+
+        /*用來測試亂數產生的圖片檔案有沒有已被用過*/
+        var image_used = [[false, false, false, false],
+                                        [false, false, false, false],
+                                        [false, false, false, false],
+                                        [false, false, false, false]];
+
         /**從最外層node連接到最內層**/
         /*建立tbody、table元素*/
         insert_table_node = document.createElement("table");
