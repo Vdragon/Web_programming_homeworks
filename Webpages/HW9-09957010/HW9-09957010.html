@@ -75,17 +75,32 @@ HW9-09957010
                           [false, false, false, false]]*/
         for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
           td_used[tr_count - 1] = [];
-        }
-        for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
-          for(td_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
-            td_used[tr_count - 1][td_count] = false;
+          for(td_count = 1; td_count <= FIELD_WIDTH; td_count++){
+            td_used[tr_count - 1][td_count - 1] = false;
           }
         }
+        /*for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+          for(td_count = 1; td_count <= FIELD_WIDTH; td_count++){
+            td_used[tr_count - 1][td_count - 1] = false;
+          }
+        }*/
 
         var guess_x, guess_y;
 
-        /*用來保存每一格目前圖片的二維陣列*/
-       /* var td_image = */
+        /*用來保存每一格目前圖片號碼的二維陣列*/
+        var td_image = [];
+
+        for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+          td_image[tr_count - 1] = [];
+          for(td_count = 1; td_count <= FIELD_WIDTH; td_count++){
+            td_image[tr_count - 1][td_count -1] = 0;
+          }
+        }
+        /*for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+          for(td_count = 1; td_count <= FIELD_WIDTH; td_count++){
+            td_image[tr_count - 1][td_count -1] = 0;
+          }
+        }*/
 
         /**從最外層node連接到最內層**/
         /*建立tbody、table元素*/
@@ -127,6 +142,10 @@ HW9-09957010
               insert_img_node.style.display = "none";
             }
 
+            /*紀錄每張圖片的位置對應序號*/
+            td_image[guess_x - 1][guess_y - 1] = guess_x * 10 + guess_y;
+
+            /*加入圖片替代訊息*/
             insert_img_node.alt = "a \"game of 15\" image";
 
             /*插入event
