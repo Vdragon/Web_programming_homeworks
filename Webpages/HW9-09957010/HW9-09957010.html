@@ -43,8 +43,15 @@ HW9-09957010
     <link href='http://ind.ntou.edu.tw/~pika1021/Stylesheets/Generic_stylesheet.css' rel='stylesheet' type='text/css' />
     <script type='text/javascript'>
       <!--
-      // 對整個script啟用strict模式
+      /*對整個script啟用strict模式*/
       "use strict";
+
+      /*一些常數參數（關鍵字const仍非標準的一部份，所以不使用）
+          Are there constants in Javascript?
+          http://stackoverflow.com/questions/130396/are-there-constants-in-javascript
+      */
+      /*表格寬度*/
+      var FIELD_WIDTH = 4;
 
       /**建立表格函式**/
       function initGameTable(){
@@ -61,11 +68,24 @@ HW9-09957010
         /*建立4*4表格，由(1,1)到(4,4)*/
         var tr_count, td_count;
 
-        /*用來測試亂數產生的圖片檔案有沒有已被用過*/
-        var image_used = [[false, false, false, false],
-                                        [false, false, false, false],
-                                        [false, false, false, false],
-                                        [false, false, false, false]];
+        /*用來測試亂數產生的圖片檔案有沒有已被用過的二維陣列*/
+        var td_used = [];/* = [[false, false, false, false],
+                          [false, false, false, false],
+                          [false, false, false, false],
+                          [false, false, false, false]]*/
+        for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+          td_used[tr_count - 1] = [];
+        }
+        for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+          for(td_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
+            td_used[tr_count - 1][td_count] = false;
+          }
+        }
+
+        var guess_x, guess_y;
+
+        /*用來保存每一格目前圖片的二維陣列*/
+       /* var td_image = */
 
         /**從最外層node連接到最內層**/
         /*建立tbody、table元素*/
@@ -75,7 +95,7 @@ HW9-09957010
         insert_tbody_node = document.createElement("tbody");
 
         /*建立4個列*/
-        for(tr_count = 1; tr_count <= 4; tr_count++){
+        for(tr_count = 1; tr_count <= FIELD_WIDTH; tr_count++){
           /*Debug message
           window.alert("Making <tr>");*/
 
@@ -83,16 +103,23 @@ HW9-09957010
           insert_tr_node = document.createElement("tr");
 
           /*每列建立4個欄*/
-          for(td_count = 1; td_count <= 4; td_count++){
+          for(td_count = 1; td_count <= FIELD_WIDTH; td_count++){
             /*建立td元素*/
             insert_td_node = document.createElement("td");
 
             /*插入圖片*/
             insert_img_node = document.createElement("img");
 
+            /*在還沒找到沒用過的xy位置之前隨便猜一個圖片xy位置*/
+            do{
+              guess_x = Math.floor((Math.random() * FIELD_WIDTH) + 1);
+              guess_y = Math.floor((Math.random() * FIELD_WIDTH) + 1);
+            }while(td_used[guess_x - 1][guess_y - 1] == true);
+            td_used[guess_x - 1][guess_y - 1] = true;
+
             /*如果有圖片的話就插入資源位址*/
-            if(tr_count * td_count != 16){
-              insert_img_node.src = "Resources/15_images/" + tr_count + td_count + ".GIF";
+            if(guess_x * guess_y != Math.pow(FIELD_WIDTH, 2) ){
+              insert_img_node.src = "Resources/15_images/" + guess_x + guess_y + ".GIF";
             }
             else{
               /*沒有的話就不顯示*/
@@ -119,8 +146,9 @@ HW9-09957010
         /*tbody插入table中*/
         insert_table_node.appendChild(insert_tbody_node);
 
-        /*table插入div中*/
-        game_node.appendChild(insert_table_node);
+        /*table元素準備完成，移除等待訊息，table插入div中*/
+        game_node.replaceChild(insert_table_node, document.getElementById("loading_msg"));
+
 
         return;
       }
@@ -150,17 +178,9 @@ HW9-09957010
       <hr />
     </div>
     <div class='div_content'>
-    <!--遊戲table（已被Javascript取代）
-    <table>
-      <tbody>
-        <tr>
-          <td><img src='' alt='block' onclick=''></td>
-        </tr>
-      </tbody>
-    </table>
-    -->
+    <!--遊戲table（已被Javascript取代）-->
       <div id='div_game_content'>
-
+        <span id='loading_msg'><em>遊戲載入中，請稍候……</em></span>
       </div>
     </div>
     <!--footer-->
