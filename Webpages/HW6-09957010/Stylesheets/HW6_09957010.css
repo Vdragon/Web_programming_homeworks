@@ -1,0 +1,24 @@
+/*CSS樣式表範本
+  CSS樣式表用途：HW6-09957010。
+  CSS樣式表版本：0.00(0)201111031541
+  CSS樣式表範本版本：1.00(0)201110091754
+  CSS創作者：林博仁(Henry Lin, pika1021@gmail.com)
+  此CSS使用的智慧財產授權：自由使用(free)  
+*/
+@media screen{
+.table_generic{
+  border-style:solid;
+  border-width:1px;
+  border-color:black;
+  
+}
+.table_generic td{
+  border-style:solid;
+  border-width:1px;
+  border-color:black;
+  
+}
+}
+@media print{
+
+}

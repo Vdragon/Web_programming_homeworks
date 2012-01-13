@@ -1,0 +1,52 @@
+@charset "UTF-8";
+@import url("http://fonts.googleapis.com/css?family=Ubuntu");
+
+
+/*
+  charset @-規則：宣告CSS使用的文字編碼。
+  import @-規則：將其他位置的樣式表import到此樣式表
+*/
+/*
+通用CSS(Generic CSS)
+  CSS樣式表用途：提供通用的CSS樣式套用。
+  CSS樣式表版本：1.03(3)201112020123
+  CSS樣式表範本版本：1.00(0)201110091754
+  CSS創作者：林博仁(Henry Lin, pika1021@gmail.com)
+  此CSS使用的智慧財產授權：自由使用(free) 
+已知問題：
+    
+待辦事項：
+
+變更紀錄：
+  1.03(3)
+    -bug:generic_warning_text 錯誤屬性名稱
+  1.02(2)
+    +警告文字
+    -bug:英文字型改為Ubuntu優先
+    -bug:錯誤套用通用樣式於非通用class的td, th標籤問題
+    -bug:invalid 'grey' color值
+  1.01(1)
+    +加入預設字型
+*/
+
+@media screen{
+  /*通用字型樣式*/
+  .generic_body{
+    font-family:"ubuntu", "文泉驛正黑", serif;
+  }
+  /*通用表格樣式*/
+  .generic_table,.generic_table td,.generic_table th{
+    border-color:gray;
+    border-style:solid;
+    border-width:2px;
+    border-collapse:collapse;
+  }
+  /*通用警告文字樣式*/
+  .generic_warning_text{
+    color:red;
+    font-weight:bold;
+  }
+}
+@media print{
+
+}

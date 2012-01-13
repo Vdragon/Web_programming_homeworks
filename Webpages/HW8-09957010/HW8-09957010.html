@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--（此標籤包住的內容為註解）以上為XML和DTD(Document Type
+    Definition)的宣告-->
+
+<!--
+HW8-09957010
+  本網頁使用的智慧財產授權：
+    創用CC　姓名標示─非商業性─相同方式分享(BY-NC-SA) 目前最新版本
+    詳細資料註明於下方meta元素。
+已知問題：
+  1.window.open()第二個參數無效果。
+      ->正常，語法本來就無此功能。
+  2.使Javascript符合JSlint規範（真它媽龜毛）
+待辦事項：
+
+
+-->
+
+<!--html標籤：html主要內容
+    XHTML規範需要／選用的屬性：xmlns, xml:lang
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xml:lang="zh_TW"
+       lang="zh_TW">
+  <!--head標籤：包含一些metadata（中介資料）-->
+  <head>
+    <!--title標籤：顯示於標題列(title bar)的文字-->
+    <title>網路程式設計作業８</title>
+    <!--meta標籤：一些非此標籤所能表示的一些其他的metadata（中介資料）
+          name屬性：metadata的名稱
+            author：網頁的創作者名稱。
+            description：網頁的內容描述。
+            generator：產生這份網頁的軟體名稱。
+            keyword：這個網頁的關鍵字。
+            robots：要求搜索引擎的索引軟體對這個網頁採取的行動。
+          content屬性：這個metadata名稱之內容
+          http-equiv屬性：用來變更伺服器跟user-agent的行為，使用content屬性定義這個屬性的值。
+            content-type：
+              text/html：原本要用application/xhtml+xml的MIME（Multipurpose Internet Mail Extensions，多用途網際網路郵件檔案類型），不過為了增加HTML 4相容性故使用text/html
+              charset：網頁內容使用的字元集合(charset)
+          參考網址：https://developer.mozilla.org/en/HTML/Element/meta
+    -->
+    <!--網頁版本-->
+    <meta name="webpage-version" content="1.01(1)201112070224" />
+    <!--XHTML範本版本-->
+    <meta name="template-version" content="1.03(7)201111232041" />
+    <meta name="author" content="09957010 林博仁" />
+    <meta name="description" content="網路程式設計作業８" />
+    <meta name="generator" content="Notepad++以及gedit純文字編輯器" />
+    <meta name="keywords" content="HW8-09957010" />
+    <meta name="robots" content="index,follow" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!--
+    <link href='' rel='stylesheet' type='text/css' />
+    <style type='text/css'>
+
+    </style>
+    <script src='' type='text/javascript'>
+    -->
+    <style type='text/css'>
+    #content{
+      color:blue;
+	  }
+	  #user_name{
+		  color:red;
+	  }
+	  #field_question1{
+      /*按照Strict規範加入fieldset tag之後反而多出了一個box...消除影響*/
+      border-style:none;
+      margin:0;
+      padding:0;
+	  }
+    </style>
+	<script type='text/javascript'>
+    <!--
+		var username = "";
+		/*保存結果的字串陣列
+      避免new關鍵字造成的不必要運算，故改用literal的宣告方式
+      stackoverflow.com/questions/931872/whats-the-difference-between-array-and-while-declaring-a-javascript-ar
+		*/
+		var result_string = ["護照證件不見了", "身上沒有一毛錢",
+                        "被以犯罪嫌疑拘留", "受騙，遇到壞人"];
+		/*保存結果描述的字串陣列*/
+		var description_string = [
+      "你的事業心很重，爲了向光明的前程衝刺，你可以暫時不顧兒女私情。你的愛情也不喜歡對方太粘你，喜歡享受對方的愛卻又吝於付出。成功的背後的確是需要一個偉大的男（女）人，只是對方也有被愛的權利。",
+      "你的事業占６０％，愛情占４０％。基本上你的另一半如果不是感情用事的人，相信你們會是很幸福的一對，很多事情也都可以一起面對。平常可以享受感情的甜蜜，也間接化解了工作上可能面對的壓力。只是有時候壓力常來自於工作，你也常因此而不小心傷害了愛自己的另一方。",
+      "你的事業占４０％，愛情占６０％。你是一個很重感情的人，有時候寧願成全愛情，也甘心放棄自己辛苦打拼的事業。只是愛情也不能沒有麵包，這個社會實在是樣樣都要錢。沒有了過得去的經濟環境，你也可能得不到心裏憧憬的愛情。",
+      "你的事業占２０％，愛情占８０％。基本上你的事業心本來就不算重，甚至也不喜歡工作，所以你會花很多心思在愛情上，也容易博取對方的好感進而使他願意跟你在一起。等到婚後才會感受到“巧婦難爲無米之炊”，沒有錢是多麽可怕的一件事。"
+		];
+
+
+    /*向使用者提問名字的函式
+      為了避免網頁瀏覽器DOM未載入span所以改用Javascript的onLoad event呼叫之
+      https://developer.mozilla.org/en/Migrate_apps_from_Internet_Explorer_to_Mozilla
+    */
+    function promptUsername() {
+      /*啟用EMCA Script 5 的Strict Mode
+      http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
+      */
+      "use strict";
+
+      /*取得cookie資料*/
+      var cookie_tokens = unescape(document.cookie).split(";");
+
+      /*從cookie尋找name值*/
+      var i;
+      var isNameExist = false;
+      for(i = 0; i < cookie_tokens.length; i++) {
+        if(cookie_tokens[i].split("=")[0].localeCompare("name" ) === 0) {
+          isNameExist = true;
+          username = cookie_tokens[i].split("=")[1];
+          /*window.alert("找到舊的cookie：" + name);*/
+          break;
+        }
+      }
+
+      /*找不到cookie資料中的name值*/
+      if(isNameExist === false) {
+        username = window.prompt("請輸入您的名字：");
+        document.cookie = "name=" + escape(username);
+        //window.alert("存入新的cookie：" + document.cookie);
+      }
+      document.getElementById("welcome_message").innerHTML +=
+        "<span id='user_name'>" + username + "</span>";
+    }
+
+
+    function checkAnswer() {
+      /*啟用EMCA Script 5 的Strict Mode
+      http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
+      */
+      "use strict";
+
+			/*判斷哪個input有被選取
+			  user_ans最後應為1~4或5（代表未選取）*/
+			var user_ans;
+			for(user_ans = 1; user_ans <= 4; user_ans++) {
+
+				if(document.getElementsByName("option")[user_ans - 1].checked === true) {
+					break;
+				}
+			}
+
+			/*建立新視窗*/
+			/*window.open使用方法：
+			var windowObjectReference = window.open(strUrl, strWindowName[, strWindowFeatures]);
+			參考資料：https://developer.mozilla.org/en/DOM/window.open
+			*/
+			var window_obj = window.open("about:blank", "result_window", "toolbar = no, menubar = no, scrollbars = yes");
+
+			/*如果有選取選項就印出結果*/
+			if(user_ans >= 1 && user_ans <= 4) {
+					window_obj.document.write("<h2>" + username + "的選項是：");
+					window_obj.document.write(result_string[user_ans - 1] + "</h2>" + description_string[user_ans - 1]
+					 + "<br /><img src='Resources/op-" + user_ans + ".jpg' alt='圖片：" + result_string[user_ans - 1] + "' />");
+			}
+			else{
+			  window_obj.document.write("您未輸入任何選項");
+			}
+		}
+		//-->
+	</script>
+  </head>
+  <!--body標籤：包含網頁的內容(content)
+      XHTML規範選用的屬性：
+        xml:lang：用來宣告XML使用的語言
+      參考網址：https://developer.mozilla.org/en/HTML/Element/body
+  -->
+  <body xml:lang="zh-TW" lang="zh-TW" onload='promptUsername()'>
+	<div id='content'>
+		<span id='welcome_message'>你好!</span><br />
+
+		<form action='javascript:checkAnswer()' method='post'>
+      <!--XHTML 1.0 Strict以上要求form內容需要包在<frameset>tag中
+      http://stackoverflow.com/questions/623513/xhtml-strict-validation
+      -->
+      <fieldset id='field_question1'>
+        請選擇以下選項來測驗你心中事業與愛情哪個重要：<br />
+        <label><input name='option' type='radio' />護照證件不見了</label><br />
+        <label><input name='option' type='radio' />身上沒有一毛錢</label><br />
+        <label><input name='option' type='radio' />被以犯罪嫌疑居留</label><br />
+        <label><input name='option' type='radio' />受騙，遇到壞人</label><br />
+        <input type='submit' value='送出' />
+        <input type='reset' value='清除' />
+			</fieldset>
+		</form>
+	</div>
+
+  </body>
+</html>

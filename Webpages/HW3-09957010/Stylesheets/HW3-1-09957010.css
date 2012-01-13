@@ -1,0 +1,15 @@
+/*stylesheet normal*/
+body	
+{
+  background-image:url("../Resources/HW3-1-09957010/deitel.gif");
+	background-position:bottom left;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+}
+.box-overflow01
+{
+  width:70%;
+  height:150px;
+  overflow:scroll;
+  font-family:"Arial", serif;
+}
